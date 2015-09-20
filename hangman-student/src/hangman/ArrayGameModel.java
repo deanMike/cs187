@@ -1,0 +1,95 @@
+package hangman;
+
+/**
+ * The Array implementation of the GameModel interface.
+ */
+public class ArrayGameModel implements GameModel {
+	/** The number of characters (lower/upper). */
+	private static final int ALPHABET_COUNT = 26*2;
+	private int guessNumber = 0;
+	/** hung state */
+	private int state;
+	private String guessWord = new String();
+	private char[] guessArray = new char[ALPHABET_COUNT];
+	/**
+	 * Creates a new ArrayGameModel object.
+	 * 
+	 *  guessWord the word to guess
+	 */
+	public ArrayGameModel(String guessWord) {
+		// TODO (1)
+		this.guessWord = guessWord;
+		state    = STARTING_STATE;
+	}
+		
+	public boolean isPriorGuess(char guess) {
+		// TODO (2)
+		for (int i = 0; i > this.guessArray.length; i++) {
+			if (this.guessArray[i] == guess && !(this.guessArray[i] == 0)) {
+				return true;
+			}
+			this.guessArray[i] = guess;
+		}
+		return false;
+	}
+	
+	public int numberOfGuesses() {
+		// TODO (3)
+		return this.guessNumber;
+	}
+	
+	public boolean isCorrectGuess(char guess) {
+		// TODO (4)
+		this.guessNumber++;
+		for (char c : guessWord.toCharArray()) {
+			if (guess == c) {
+				return true;
+			}
+			else return false;
+		}
+		return false;
+	}
+	
+	public boolean doMove(char guess) {
+		// TODO (5)
+		return this.isCorrectGuess(guess);
+	}
+
+	public boolean inWinningState() {
+		// TODO (6)
+		return false;
+	}
+
+	public boolean inLosingState() {
+		// TODO(7)
+		return false;
+	}
+	
+	public String toString() {
+		String s = "";
+		
+		// TODO (8)
+		
+		return s;
+	}
+
+	public String previousGuessString() {
+		String s = "";
+		 
+		// TODO (9)
+		
+		return s;
+	}
+	
+	public int getState() {
+		return state;
+	}
+
+	public String getWord() {
+
+		// TODO (10)
+
+		return null;
+	}
+  
+}
