@@ -45,8 +45,8 @@ public class ArrayGameModel implements GameModel {
 			if (guess == c) {
 				return true;
 			}
-			else return false;
 		}
+		this.state++;
 		return false;
 	}
 	
@@ -57,17 +57,31 @@ public class ArrayGameModel implements GameModel {
 
 	public boolean inWinningState() {
 		// TODO (6)
+		if (this.toString().equals(guessWord)) {
+			return true;
+		}
 		return false;
 	}
 
 	public boolean inLosingState() {
 		// TODO(7)
+		if (this.state == 10) {
+			return true;
+		}
 		return false;
 	}
 	
 	public String toString() {
 		String s = "";
-		
+		for (int i = 0; i < this.guessArray.length; i++) {
+			for (int j = 0; j < this.guessWord.toCharArray().length; j++) {
+				if (this.guessArray[i] == this.guessWord.toCharArray()[j]) {
+					s += this.guessArray[i] + " ";
+				} else {
+					s+= "_ ";
+				}
+			}
+		}
 		// TODO (8)
 		
 		return s;
