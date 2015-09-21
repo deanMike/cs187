@@ -25,10 +25,10 @@ public class ArrayGameModel implements GameModel {
 	public boolean isPriorGuess(char guess) {
 		// TODO (2)
 		for (int i = 0; i > this.guessArray.length; i++) {
-			if (this.guessArray[i] == guess && !(this.guessArray[i] == 0)) {
+			if (this.guessArray[i] == guess) {
 				return true;
 			}
-			this.guessArray[i] = guess;
+			System.out.print(this.guessArray[i]);
 		}
 		return false;
 	}
@@ -52,7 +52,14 @@ public class ArrayGameModel implements GameModel {
 	
 	public boolean doMove(char guess) {
 		// TODO (5)
-		return this.isCorrectGuess(guess);
+		for (int i = 0; i < this.guessArray.length; i++) {
+			if (this.guessArray[i] == '\u0000' && !this.isPriorGuess(guess)) {
+				this.guessArray[i] = guess;
+				state++;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean inWinningState() {
@@ -73,25 +80,38 @@ public class ArrayGameModel implements GameModel {
 	
 	public String toString() {
 		String s = "";
-		for (int i = 0; i < this.guessArray.length; i++) {
-			for (int j = 0; j < this.guessWord.toCharArray().length; j++) {
-				if (this.guessArray[i] == this.guessWord.toCharArray()[j]) {
-					s += this.guessArray[i] + " ";
-				} else {
-					s+= "_ ";
+		char[] wordArray = new char[this.guessWord.toCharArray().length];
+		for (int i = 0; i < wordArray.length; i++) {
+			wordArray[i] = '_';
+		}
+		
+		for (int i = 0; i < wordArray.length; i++) {
+			for (char c : this.guessArray) {
+				if(c == this.guessWord.toCharArray()[i]) {
+					wordArray[i] = c;
 				}
 			}
 		}
+		for (int i = 0; i < wordArray.length; i++) {
+			s += wordArray[i];
+			if (i < wordArray.length - 1) {
+				s += " ";
+			}
+		}
 		// TODO (8)
-		
 		return s;
 	}
 
 	public String previousGuessString() {
-		String s = "";
+		String s = "[" + this.guessArray[0];
 		 
 		// TODO (9)
-		
+		for (int i = 1; i < this.guessArray.length; i++) {
+			if (!(this.guessArray[i] == '\u0000')) {
+				s += ", " + this.guessArray[i];
+			}
+		}
+		s += "]";
 		return s;
 	}
 	
