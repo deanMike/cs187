@@ -1,0 +1,128 @@
+package hangman;
+
+/**
+ * The Array implementation of the GameModel interface.
+ */
+public class ArrayGameModel implements GameModel {
+	/** The number of characters (lower/upper). */
+	private static final int ALPHABET_COUNT = 26*2;
+	private int guessNumber = 0;
+	/** hung state */
+	private int state;
+	private String guessWord = new String();
+	private char[] guessArray = new char[ALPHABET_COUNT];
+	/**
+	 * Creates a new ArrayGameModel object.
+	 * 
+	 *  guessWord the word to guess
+	 */
+	public ArrayGameModel(String guessWord) {
+		// TODO (1)
+		this.guessWord = guessWord;
+		state    = STARTING_STATE;
+	}
+		
+	public boolean isPriorGuess(char guess) {
+		// TODO (2)
+		for (int i = 0; i > this.guessArray.length; i++) {
+			if (this.guessArray[i] == guess) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int numberOfGuesses() {
+		// TODO (3)
+		return this.guessNumber;
+	}
+	
+	public boolean isCorrectGuess(char guess) {
+		// TODO (4)
+		this.guessNumber++;
+		for (char c : guessWord.toCharArray()) {
+			if (guess == c) {
+				return true;
+			}
+		}
+		this.state++;
+		return false;
+	}
+	
+	public boolean doMove(char guess) {
+		// TODO (5)
+		for (int i = 0; i < this.guessArray.length; i++) {
+			if (this.guessArray[i] == '\u0000' && !this.isPriorGuess(guess)) {
+				this.guessArray[i] = guess;
+				state++;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean inWinningState() {
+		// TODO (6)
+		if (this.toString().equals(guessWord)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean inLosingState() {
+		// TODO(7)
+		if (this.state == 10) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String toString() {
+		String s = "";
+		char[] wordArray = new char[this.guessWord.toCharArray().length];
+		for (int i = 0; i < wordArray.length; i++) {
+			wordArray[i] = '_';
+		}
+		
+		for (int i = 0; i < wordArray.length; i++) {
+			for (char c : this.guessArray) {
+				if(c == wordArray[i]) {
+					wordArray[i] = c;
+				}
+			}
+		}
+		for (int i = 0; i < wordArray.length; i++) {
+			s += wordArray[i];
+			if (i > 0) {
+				s += " ";
+			}
+		}
+		// TODO (8)
+		return s;
+	}
+
+	public String previousGuessString() {
+		String s = "[" + this.guessArray[0];
+		 
+		// TODO (9)
+		for (int i = 1; i < this.guessArray.length; i++) {
+			if (!(this.guessArray[i] == '\u0000')) {
+				s += ", " + this.guessArray[i];
+			}
+		}
+		s += "]";
+		return s;
+	}
+	
+	public int getState() {
+		return state;
+	}
+
+	public String getWord() {
+
+		// TODO (10)
+
+		return null;
+	}
+  
+}
